@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 22:23:44 by taomalbe          #+#    #+#             */
-/*   Updated: 2024/11/25 16:12:13 by taomalbe         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:56:14 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*ft_strjoin(char *s1, char const *s2, int n)
 	join[0] = '\0';
 	ft_strcpy(join, s1);
 	ft_strncat(join, s2, n);
+	free(s1);
 	return (join);
 }
 int	ft_is_ln(char *s)

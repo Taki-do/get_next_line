@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:53:15 by taomalbe          #+#    #+#             */
-/*   Updated: 2024/11/25 16:33:15 by taomalbe         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:57:56 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 89
+//# define BUFFER_SIZE 89
 
 char	*get_next_line(int fd);
 char	*ft_strcpy(char *dest, char const *src);
