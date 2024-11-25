@@ -4,14 +4,16 @@
 
 int	main(void)
 {
-	int	i;
-    int fd;
+	int		i;
+    int 	fd;
+	char	*line;
 
 	i = 0;
     fd = open("get_next_line.c", O_RDONLY);
-	while (i < 20)
+	while (i < 21)
 	{
-		printf("%s", get_next_line(fd));
+		line = get_next_line(fd);
+		printf("%s", line);
 		i++;
 	}
 }
