@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-//# define BUFFER_SIZE 89
+//# define BUFFER_SIZE 100
 
 char	*get_next_line(int fd);
 char	*ft_strcpy(char *dest, char const *src);

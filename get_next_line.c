@@ -12,6 +12,20 @@
 
 #include "get_next_line.h"
 
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*str;
+	size_t			i;
+
+	i = 0;
+	str = (unsigned char *)s;
+	while (i < n)
+	{
+		str[i] = 0;
+		i++;
+	}
+}
+
 char	*ft_strdup(const char *s)
 {
 	int		s_len;
@@ -73,9 +87,9 @@ char	*get_next_line(int fd)
 	int				i;
 	int				rd;
 	char			*line;
-	static char		buf[BUFFER_SIZE];
+	static char		buf[BUFFER_SIZE + 1];
 	
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0) //peut del read
 		return (NULL);
 	rd = 1;
 	line = ft_strdup("");
@@ -83,6 +97,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (buf[0])
 	{
+		if (buf[0] == '\n')
+		{
+    		line = ft_strjoin(line, "\n", 1);
+    		ft_memmove(buf, buf + 1, BUFFER_SIZE - 1);
+    		return (line);
+		}
 		if (ft_is_ln(buf))
 		{
 			i = 0;
@@ -98,8 +118,9 @@ char	*get_next_line(int fd)
 	{
 		rd = read(fd, buf, BUFFER_SIZE);
 		if (rd == -1)
-			return (free(line), line = NULL, NULL);
-		buf[rd] = '\0';
+			return (ft_bzero(buf, BUFFER_SIZE + 1), free(line), line = NULL, NULL);
+		if (rd >= 0)
+			buf[rd] = '\0';
 		if (ft_is_ln(buf))
 		{
 			i = 0;
