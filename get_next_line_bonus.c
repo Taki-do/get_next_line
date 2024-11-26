@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 15:54:35 by taomalbe          #+#    #+#             */
-/*   Updated: 2024/11/26 15:47:28 by taomalbe         ###   ########.fr       */
+/*   Created: 2024/11/26 15:44:31 by taomalbe          #+#    #+#             */
+/*   Updated: 2024/11/26 15:44:34 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,16 @@ char	*ft_read(int fd, char buf[BUFFER_SIZE + 1], char *line)
 char	*get_next_line(int fd)
 {
 	char			*line;
-	static char		buf[BUFFER_SIZE + 1];
+	static char		buf[1024][BUFFER_SIZE + 1];
 
 	line = ft_strdup("");
 	if (!line)
 		return (NULL);
-	if (buf[0])
+	if (buf[fd][0])
 	{
-		if (ft_is_ln(buf))
-			return (ft_return_ln(buf, line));
-		line = ft_strjoin(line, buf, ft_strlen(buf));
+		if (ft_is_ln(buf[fd]))
+			return (ft_return_ln(buf[fd], line));
+		line = ft_strjoin(line, buf[fd], ft_strlen(buf[fd]));
 	}
-	return (ft_read(fd, buf, line));
+	return (ft_read(fd, buf[fd], line));
 }
