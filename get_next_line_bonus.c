@@ -83,6 +83,8 @@ char	*get_next_line(int fd)
 	char			*line;
 	static char		buf[1024][BUFFER_SIZE + 1];
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	line = ft_strdup("");
 	if (!line)
 		return (NULL);
