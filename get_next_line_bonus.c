@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	ft_z(void *s, size_t n)
 {
@@ -58,33 +58,42 @@ char	*ft_return_ln(char buf[BUFFER_SIZE + 1], char *line)
 	return (line);
 }
 
-char	*ft_read(int fd, char buf[BUFFER_SIZE + 1], char *line)
+char	*ft_read(int fd, char **buf, char *line)
 {
 	int	rd;
 
 	rd = 1;
 	while (rd > 0)
 	{
-		rd = read(fd, buf, BUFFER_SIZE);
+		rd = read(fd, buf[fd], BUFFER_SIZE);
 		if (rd == -1)
-			return (ft_z(buf, BUFFER_SIZE + 1), free(line), line = NULL, NULL);
-		buf[rd] = '\0';
-		if (ft_is_ln(buf))
-			return (ft_return_ln(buf, line));
-		line = ft_strjoin(line, buf, ft_strlen(buf));
+			return (ft_z(buf[fd], BUFFER_SIZE + 1), free(buf[fd]),
+				buf[fd] = NULL, free(line), line = NULL, NULL);
+		buf[fd][rd] = '\0';
+		if (ft_is_ln(buf[fd]))
+			return (ft_return_ln(buf[fd], line));
+		line = ft_strjoin(line, buf[fd], ft_strlen(buf[fd]));
 	}
 	if (rd == 0 && !line[0])
-		return (free(line), line = NULL, NULL);
+		return (free(buf[fd]), buf[fd] = NULL, free(line),
+			line = NULL, NULL);
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	char			*line;
-	static char		buf[1024][BUFFER_SIZE + 1];
+	static char		*buf[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (!buf[fd])
+	{
+		buf[fd] = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+		if (!buf[fd])
+			return (NULL);
+		buf[fd][0] = '\0';
+	}
 	line = ft_strdup("");
 	if (!line)
 		return (NULL);
@@ -94,5 +103,5 @@ char	*get_next_line(int fd)
 			return (ft_return_ln(buf[fd], line));
 		line = ft_strjoin(line, buf[fd], ft_strlen(buf[fd]));
 	}
-	return (ft_read(fd, buf[fd], line));
+	return (ft_read(fd, buf, line));
 }
